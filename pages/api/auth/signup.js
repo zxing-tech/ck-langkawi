@@ -14,30 +14,23 @@
  */
 
 import { signUpUser } from "@/controllers/auth.controller";
-import upload from "@/middleware/upload.middleware";
+// import upload from "@/middleware/upload.middleware"; // Temporarily disabled
 
-export const config = {
-  api: {
-    bodyParser: false,
-    externalResolver: true,
-  },
-};
+// Temporarily disabled upload for development
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//     externalResolver: true,
+//   },
+// };
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   switch (req.method) {
     case "POST":
       try {
-        upload.single("avatar")(req, res, async (err) => {
-          if (err) {
-            return res.send({
-              success: false,
-              message: err.message,
-            });
-          }
-
-          const result = await signUpUser(req);
-          res.send(result);
-        });
+        // Temporarily bypass upload middleware
+        const result = await signUpUser(req);
+        res.send(result);
       } catch (error) {
         res.send({
           success: false,

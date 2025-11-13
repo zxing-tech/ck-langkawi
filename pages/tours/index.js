@@ -24,7 +24,7 @@ const Tours = () => {
     <main>
       <Head>
         <title>
-          Travel Landing Page by Travello - Filter Your Required Travels
+          Browse Cars - Find Your Perfect Rental Car in Langkawi
         </title>
       </Head>
       <Main>

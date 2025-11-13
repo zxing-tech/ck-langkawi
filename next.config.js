@@ -21,6 +21,12 @@ const nextConfig = {
         port: "3000",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   async headers() {

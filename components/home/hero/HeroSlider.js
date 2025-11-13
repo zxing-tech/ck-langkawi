@@ -68,10 +68,11 @@ const HeroSlider = () => {
     ]
   );
 
+  // Car images from Unsplash
   const images = [
-    "/assets/static/Hero Banners/1.png",
-    "/assets/static/Hero Banners/2.png",
-    "/assets/static/Hero Banners/3.png",
+    "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=364&h=512&fit=crop&q=80", // Luxury Sports Car
+    "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=364&h=512&fit=crop&q=80", // Premium SUV
+    "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=364&h=512&fit=crop&q=80", // Modern Sedan
   ];
 
   return (
@@ -82,11 +83,11 @@ const HeroSlider = () => {
             <div key={index} className="keen-slider__slide">
               <LoadImage
                 src={image}
-                alt={`Image ${index + 1}`}
+                alt={`Premium Car ${index + 1}`}
                 height={512}
                 width={364}
-                className="rounded border border-primary md:ml-auto mx-auto"
-                title="Dimension: 364x512"
+                className="rounded border border-primary md:ml-auto mx-auto object-cover"
+                title="Premium rental cars"
               />
             </div>
           ))}

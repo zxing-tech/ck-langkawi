@@ -20,85 +20,96 @@ import React, { useRef, useState } from "react";
 import { BiDownArrowAlt, BiUpArrowAlt } from "react-icons/bi";
 
 const Gallery = () => {
-  const images = [
-    "/assets/static/Gallery Explorer/1.png",
-    "/assets/static/Gallery Explorer/2.png",
-    "/assets/static/Gallery Explorer/3.png",
-    "/assets/static/Gallery Explorer/4.png",
-    "/assets/static/Gallery Explorer/5.png",
-    "/assets/static/Gallery Explorer/6.png",
-    "/assets/static/Gallery Explorer/7.png",
-    "/assets/static/Gallery Explorer/8.png",
-    "/assets/static/Gallery Explorer/9.png",
-    "/assets/static/Gallery Explorer/10.png",
-    "/assets/static/Gallery Explorer/11.png",
-    "/assets/static/Gallery Explorer/4.png",
-    "/assets/static/Gallery Explorer/5.png",
-    "/assets/static/Gallery Explorer/6.png",
-    "/assets/static/Gallery Explorer/7.png",
-    "/assets/static/Gallery Explorer/8.png",
-    "/assets/static/Gallery Explorer/12.png",
-    "/assets/static/Gallery Explorer/18.png",
-    "/assets/static/Gallery Explorer/19.png",
-    "/assets/static/Gallery Explorer/11.png",
-    "/assets/static/Gallery Explorer/13.png",
-    "/assets/static/Gallery Explorer/14.png",
-    "/assets/static/Gallery Explorer/15.png",
-    "/assets/static/Gallery Explorer/16.png",
-    "/assets/static/Gallery Explorer/8.png",
-    "/assets/static/Gallery Explorer/9.png",
-    "/assets/static/Gallery Explorer/10.png",
-    "/assets/static/Gallery Explorer/15.png",
-    "/assets/static/Gallery Explorer/16.png",
-    "/assets/static/Gallery Explorer/17.png",
-    "/assets/static/Gallery Explorer/12.png",
-    "/assets/static/Gallery Explorer/13.png",
-    "/assets/static/Gallery Explorer/14.png",
-    "/assets/static/Gallery Explorer/20.png",
-  ];
-
-  function shuffleArray(array) {
-    const shuffledArray = array.slice(); // Create a copy of the original array
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ];
-    }
-    return shuffledArray;
-  }
-
-  const shuffledImages = shuffleArray(images);
+  // Car gallery images from Unsplash - organized by category
+  const carImages = {
+    Luxury: [
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=267&h=364&fit=crop&q=80",
+    ],
+    SUV: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1611821064430-a169ecc5a6c4?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=267&h=364&fit=crop&q=80",
+    ],
+    Sedan: [
+      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1617531653520-bd466ee81789?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=267&h=159&fit=crop&q=80",
+    ],
+    Electric: [
+      "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1561580125-028ee3bd62eb?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=267&h=364&fit=crop&q=80",
+    ],
+    Sports: [
+      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1541348263662-e068662d82af?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=267&h=159&fit=crop&q=80",
+    ],
+    Family: [
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1613214149969-cd6c0e14e020?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=267&h=159&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=267&h=364&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=267&h=159&fit=crop&q=80",
+    ],
+  };
 
   const items = [
     {
-      title: "City",
-      images: 17,
+      title: "Luxury",
+      category: "Luxury",
+      count: 9,
     },
     {
-      title: "Foods",
-      images: 27,
+      title: "SUV",
+      category: "SUV",
+      count: 7,
     },
     {
-      title: "Hotel",
-      images: 21,
+      title: "Sedan",
+      category: "Sedan",
+      count: 6,
     },
     {
-      title: "Forest",
-      images: 33,
+      title: "Electric",
+      category: "Electric",
+      count: 5,
     },
     {
-      title: "Mountains",
-      images: 30,
+      title: "Sports",
+      category: "Sports",
+      count: 6,
     },
     {
-      title: "Sea Beaches",
-      images: 31,
+      title: "Family",
+      category: "Family",
+      count: 6,
     },
   ];
 
-  const [tab, setTab] = useState("Forest");
+  const [tab, setTab] = useState("Luxury");
+  const [currentImages, setCurrentImages] = useState(carImages.Luxury);
   const [counter, setCounter] = useState(9);
   const containerRef = useRef(null);
 
@@ -109,7 +120,7 @@ const Gallery = () => {
           <div className="flex flex-col gap-y-12">
             <article className="flex flex-col gap-y-4">
               <h1 className="lg:text-5xl md:text-4xl text-3xl whitespace-normal">
-                <HighlightText>Gallery</HighlightText> Explorer
+                Our <HighlightText>Fleet</HighlightText> Gallery
                 <LoadImage
                   src="/assets/home-page/destination/underline.svg"
                   alt="arrow"
@@ -119,8 +130,7 @@ const Gallery = () => {
                 />
               </h1>
               <p className="text-base">
-                Featured photos based on foods, sea-beaches, mountains, forest,
-                hotels and so on.
+                Browse our diverse collection of premium vehicles - from luxury sedans to family SUVs and eco-friendly electric cars.
               </p>
             </article>
           </div>
@@ -140,7 +150,8 @@ const Gallery = () => {
                     }
                     onClick={() => {
                       setTab(item.title);
-                      setCounter(item.images);
+                      setCurrentImages(carImages[item.category]);
+                      setCounter(item.count);
                     }}
                   >
                     {item.title}
@@ -152,21 +163,19 @@ const Gallery = () => {
                   className="grid grid-cols-12 items-center gap-4 h-[720px] overflow-y-hidden scrollbar-hide"
                   ref={containerRef}
                 >
-                  {shuffledImages.slice(0, counter).map((image, index) => (
+                  {currentImages.slice(0, counter).map((image, index) => (
                     <LoadImage
                       key={index}
                       src={image}
-                      alt={`Image ${index + 1}`}
+                      alt={`${tab} car rental - ${index + 1}`}
                       height={(index + 1) % 2 === 0 ? 364 : 159}
                       width={267}
-                      className={`lg:col-span-3 md:col-span-6 col-span-12 border w-full object-cover border-primary/30 drop-shadow rounded ${
+                      className={`lg:col-span-3 md:col-span-6 col-span-12 border w-full object-cover border-primary/30 drop-shadow rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer ${
                         (index + 1) % 2 === 0
                           ? "row-span-2 h-[364px]"
                           : "h-[159px]"
                       }`}
-                      title={
-                        "Dimension:" + " " + ((index + 1) % 2) === 0 ? 364 : 159
-                      }
+                      title={`${tab} car rental`}
                     />
                   ))}
 

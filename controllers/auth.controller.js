@@ -19,12 +19,20 @@ import generateAccessToken from "@/utils/jwt.util";
 // signup
 export async function signUpUser(req) {
   try {
+    // Use default avatar if no file uploaded (Cloudinary disabled temporarily)
+    const avatarData = req.file
+      ? {
+          url: req.file.path,
+          public_id: req.file.filename,
+        }
+      : {
+          url: "https://placehold.co/300x300.png",
+          public_id: "N/A",
+        };
+
     const user = await User.create({
       ...req.body,
-      avatar: {
-        url: req.file.path,
-        public_id: req.file.filename,
-      },
+      avatar: avatarData,
     });
 
     const result = await user.save({ validateBeforeSave: true });

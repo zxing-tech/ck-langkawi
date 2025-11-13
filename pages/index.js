@@ -17,8 +17,7 @@ export default function Home() {
     <main>
       <Head>
         <title>
-          Travel Landing Page by Travello - Comprehensive travel platform for
-          diverse booking needs
+          Car Rental - Premium Vehicle Rentals for Every Journey
         </title>
       </Head>
       <Main>

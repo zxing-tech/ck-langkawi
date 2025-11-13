@@ -135,7 +135,7 @@ const Card = ({ tour }) => {
           </button>
         )}
         <span className="absolute -bottom-2 right-4 text-xs text-primary bg-white px-3 py-1 rounded-full shadow capitalize z-50">
-          {members} Members
+          {members}
         </span>
         <div className="rounded-t relative group">
           <div
@@ -209,7 +209,7 @@ const Card = ({ tour }) => {
           <div className="flex items-center justify-between">
             <span className="text-xs flex items-center gap-x-1">
               <IoMdPricetag className="w-4 h-4 text-primary" />
-              <span className="capitalize">${price}/night</span>
+              <span className="capitalize">${price}/day</span>
             </span>
             <Button
               className="px-4 py-1 text-xs"
@@ -223,7 +223,7 @@ const Card = ({ tour }) => {
                 )
               }
             >
-              Buy Now
+              Rent Now
             </Button>
           </div>
         </div>

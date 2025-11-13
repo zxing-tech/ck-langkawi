@@ -35,7 +35,7 @@ const Advantage = () => {
           <div className="flex flex-col gap-y-12">
             <article className="flex flex-col gap-y-4">
               <h1 className="lg:text-5xl md:text-4xl text-3xl whitespace-normal">
-                <HighlightText>Choosing</HighlightText> Us
+                Why <HighlightText>Choose</HighlightText> Us
                 <LoadImage
                   src="/assets/home-page/destination/underline.svg"
                   alt="arrow"
@@ -45,8 +45,7 @@ const Advantage = () => {
                 />
               </h1>
               <p className="text-base">
-                We are committed to providing you with the best possible service
-                and value for your money.
+                Experience premium car rental service with unbeatable value. We're dedicated to making your journey comfortable, safe, and hassle-free.
               </p>
             </article>
 

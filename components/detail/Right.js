@@ -48,7 +48,7 @@ const Right = () => {
             <p className="text-sm">{tour?.summary}</p>
           </div>
           <div className="flex flex-col gap-y-1.5">
-            <h2 className="md:text-xl text-lg">Important Information</h2>
+            <h2 className="md:text-xl text-lg">Vehicle Features & Terms</h2>
             <div className="flex flex-col gap-y-1">
               {tour?.information?.map((information, index) => (
                 <p
@@ -64,7 +64,7 @@ const Right = () => {
             </div>
           </div>
           <div className="flex flex-col gap-y-1.5">
-            <h2 className="md:text-xl text-lg">Open Time</h2>
+            <h2 className="md:text-xl text-lg">Pickup & Return</h2>
             <div className="flex flex-col gap-y-1">
               {tour?.times?.map((time, index) => (
                 <p

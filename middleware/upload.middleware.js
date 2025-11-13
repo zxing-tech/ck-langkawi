@@ -14,8 +14,10 @@
  */
 
 import multer from "multer";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
+
+// Use require for multer-storage-cloudinary (CommonJS module)
+const CloudinaryStorage = require("multer-storage-cloudinary").CloudinaryStorage;
 
 /* cloudinary config */
 cloudinary.config({

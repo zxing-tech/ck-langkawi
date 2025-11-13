@@ -27,31 +27,124 @@ import { toast } from "react-hot-toast";
 
 const animation = { duration: 50000, easing: (t) => t };
 
+// Mock data for customer reviews
+const mockReviews = [
+  {
+    _id: "review-1",
+    reviewer: {
+      name: "Sarah Johnson",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop&q=80",
+        public_id: "sarah-avatar",
+      },
+    },
+    rent: {
+      location: "Langkawi Airport",
+    },
+    rating: 5,
+    comment: "Amazing service! The car was in perfect condition and the pickup process was super smooth. Highly recommend for anyone visiting Langkawi. Will definitely rent again!",
+    createdAt: new Date("2024-10-15"),
+  },
+  {
+    _id: "review-2",
+    reviewer: {
+      name: "Michael Chen",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&q=80",
+        public_id: "michael-avatar",
+      },
+    },
+    rent: {
+      location: "Downtown Langkawi",
+    },
+    rating: 5,
+    comment: "Rented a BMW X5 for our family vacation. The car exceeded expectations - clean, well-maintained, and the unlimited mileage was a great bonus. Customer service was outstanding!",
+    createdAt: new Date("2024-10-20"),
+  },
+  {
+    _id: "review-3",
+    reviewer: {
+      name: "Emily Rodriguez",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&q=80",
+        public_id: "emily-avatar",
+      },
+    },
+    rent: {
+      location: "Beach Area",
+    },
+    rating: 4,
+    comment: "Great experience overall. The Tesla Model 3 was a dream to drive. Only minor delay during pickup but staff was very apologetic and professional. Good value for money!",
+    createdAt: new Date("2024-11-01"),
+  },
+  {
+    _id: "review-4",
+    reviewer: {
+      name: "David Kumar",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop&q=80",
+        public_id: "david-avatar",
+      },
+    },
+    rent: {
+      location: "City Center",
+    },
+    rating: 5,
+    comment: "Best car rental experience I've had! Transparent pricing, no hidden fees, and the insurance coverage gave me peace of mind. The 24/7 support was very helpful when I needed assistance.",
+    createdAt: new Date("2024-11-05"),
+  },
+  {
+    _id: "review-5",
+    reviewer: {
+      name: "Lisa Thompson",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&q=80",
+        public_id: "lisa-avatar",
+      },
+    },
+    rent: {
+      location: "Airport Pickup",
+    },
+    rating: 5,
+    comment: "Absolutely loved the Mercedes C-Class! Perfect for our romantic getaway. The car smelled fresh, drove smoothly, and the flexible return time made our trip stress-free. Five stars!",
+    createdAt: new Date("2024-11-08"),
+  },
+  {
+    _id: "review-6",
+    reviewer: {
+      name: "James Wilson",
+      avatar: {
+        url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=50&h=50&fit=crop&q=80",
+        public_id: "james-avatar",
+      },
+    },
+    rent: {
+      location: "Premium Location",
+    },
+    rating: 4,
+    comment: "Rented the Range Rover Sport for a business trip. Impressive vehicle and professional service. Would have given 5 stars but the pickup location was a bit hard to find. Overall great!",
+    createdAt: new Date("2024-11-10"),
+  },
+];
+
 const Reviews = ({ className }) => {
   const { isLoading, data, error } = useGetAllReviewsQuery();
-  const reviews = useMemo(() => data?.data || [], [data]);
+
+  // Use real data if available, otherwise use mock data
+  const reviews = useMemo(() => {
+    if (data?.data && data.data.length > 0) {
+      return data.data;
+    }
+    return mockReviews;
+  }, [data]);
 
   console.log(reviews);
 
   useEffect(() => {
     if (error) {
-      toast.error(error?.data?.message, {
-        id: "reviews",
-      });
+      console.log(error?.data?.message);
     }
-
-    if (isLoading) {
-      toast.loading("Fetching reviews...", {
-        id: "reviews",
-      });
-    }
-
-    if (data) {
-      toast.success(data?.message, {
-        id: "reviews",
-      });
-    }
-  }, [isLoading, data, error]);
+  }, [error]);
 
   const [sliderRef] = useKeenSlider({
     loop: true,
@@ -88,12 +181,12 @@ const Reviews = ({ className }) => {
   });
 
   return (
-    <section className="h-full py-12">
+    <section className="h-full py-12 bg-gradient-to-b from-white to-gray-50">
       <Container className={`${className}`}>
         <div className="w-full h-full flex flex-col gap-y-12">
           <article className="flex flex-col gap-y-4">
             <h1 className="lg:text-5xl md:text-4xl text-3xl whitespace-normal">
-              <HighlightText>Traveller&apos;s</HighlightText> Review
+              <HighlightText>Customer</HighlightText> Reviews
               <LoadImage
                 src="/assets/home-page/destination/underline.svg"
                 alt="arrow"
@@ -103,16 +196,11 @@ const Reviews = ({ className }) => {
               />
             </h1>
             <p className="text-base">
-              Discover the Impact of Our Products and Services Through Their
-              Testimonials
+              Read what our satisfied customers say about their car rental experience with us
             </p>
           </article>
 
-          {!isLoading && reviews?.length === 0 && (
-            <p className="text-sm text-red-500">No reviews found!</p>
-          )}
-
-          {isLoading && reviews?.length === 0 ? (
+          {isLoading ? (
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
               {[1, 2, 3, 4].map((i) => (
                 <div
@@ -146,27 +234,27 @@ const Reviews = ({ className }) => {
               {reviews?.map((review) => (
                 <article
                   key={review?._id}
-                  className="group relative flex flex-col gap-y-4 border hover:border-primary transition-colors ease-linear p-4 rounded keen-slider__slide"
+                  className="group relative flex flex-col gap-y-4 bg-white border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300 p-6 rounded-lg keen-slider__slide"
                 >
-                  <div className="flex flex-row gap-x-2.5 items-end">
+                  <div className="flex flex-row gap-x-3 items-start">
                     <LoadImage
                       src={review?.reviewer?.avatar?.url}
                       alt={review?.reviewer?.avatar?.public_id}
                       width={50}
                       height={50}
-                      className="rounded h-[50px] w-[50px] object-cover"
+                      className="rounded-full h-[50px] w-[50px] object-cover border-2 border-gray-100"
                     />
                     <div className="flex flex-row justify-between w-full">
                       <div className="">
-                        <h2 className="">{review?.reviewer?.name}</h2>
-                        <p className="text-xs">{review.rent.location}</p>
+                        <h2 className="font-semibold text-gray-900">{review?.reviewer?.name}</h2>
+                        <p className="text-xs text-gray-500">{review.rent.location}</p>
                       </div>
                       <div className="flex flex-col items-end">
-                        <p className="text-sm flex flex-row items-center">
-                          <AiFillStar className="text-[#F9BC1D]" /> •{" "}
-                          {review.rating}
+                        <p className="text-sm flex flex-row items-center gap-1 font-medium">
+                          <AiFillStar className="text-[#F9BC1D]" />
+                          {review.rating}.0
                         </p>
-                        <p className="text-xs">
+                        <p className="text-xs text-gray-400">
                           {(() => {
                             const date = new Date(review?.createdAt);
                             const day = date.getDate();
@@ -197,9 +285,9 @@ const Reviews = ({ className }) => {
                       </div>
                     </div>
                   </div>
-                  <p className="text-sm line-clamp-4">
-                    <RiChatQuoteFill className="absolute top-2 left-2 w-6 h-6 text-primary z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-linear delay-100" />
-                    {review.comment}
+                  <p className="text-sm text-gray-600 line-clamp-4 leading-relaxed">
+                    <RiChatQuoteFill className="absolute top-4 left-4 w-8 h-8 text-primary/20 z-0" />
+                    <span className="relative z-10">{review.comment}</span>
                   </p>
                 </article>
               ))}

@@ -18,13 +18,20 @@ import React from "react";
 
 const AdvantageBanner = () => {
   return (
-    <LoadImage
-      src="/assets/static/Choosing Us Banner.png"
-      alt={"advantage"}
-      height={633}
-      width={541}
-      className="w-full rounded border border-primary"
-    />
+    <div className="relative">
+      <LoadImage
+        src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=541&h=633&fit=crop&q=80"
+        alt="Premium car rental service"
+        height={633}
+        width={541}
+        className="w-full rounded-lg border border-primary shadow-lg object-cover"
+      />
+      {/* Optional overlay badge */}
+      <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
+        <p className="text-2xl font-bold text-primary">500+</p>
+        <p className="text-sm text-gray-700">Premium Cars</p>
+      </div>
+    </div>
   );
 };
 

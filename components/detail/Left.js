@@ -163,7 +163,7 @@ const Left = () => {
         </div>
         <div className="border border-secondary flex flex-col gap-y-8 lg:p-8 md:p-6 p-4 rounded w-full">
           <div className="flex flex-col gap-y-2">
-            <h2 className="text-lg">Booking Now</h2>
+            <h2 className="text-lg">Book Your Car</h2>
             <hr className="border-1 border-primary" />
           </div>
 
@@ -182,21 +182,24 @@ const Left = () => {
                 render={({ field }) => (
                   <label
                     htmlFor="startDate"
-                    className="flex flex-row gap-x-2 items-start w-full"
+                    className="flex flex-col gap-y-1 w-full"
                   >
-                    <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
-                      <AiOutlineCalendar className="w-6 h-6" />
-                    </span>
-                    <input
-                      {...field}
-                      type="date"
-                      name="startDate"
-                      id="startDate"
-                      className="rounded-secondary h-8 w-full flex-1"
-                      onChange={(e) => field.onChange(e.target.value)}
-                      min={formatDate(tour?.duration?.startDate)}
-                      max={formatDate(tour?.duration?.endDate)}
-                    />
+                    <span className="text-xs text-gray-600">Pickup Date</span>
+                    <div className="flex flex-row gap-x-2 items-start">
+                      <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
+                        <AiOutlineCalendar className="w-6 h-6" />
+                      </span>
+                      <input
+                        {...field}
+                        type="date"
+                        name="startDate"
+                        id="startDate"
+                        className="rounded-secondary h-8 w-full flex-1"
+                        onChange={(e) => field.onChange(e.target.value)}
+                        min={formatDate(tour?.duration?.startDate)}
+                        max={formatDate(tour?.duration?.endDate)}
+                      />
+                    </div>
                   </label>
                 )}
               />
@@ -208,21 +211,24 @@ const Left = () => {
                 render={({ field }) => (
                   <label
                     htmlFor="endDate"
-                    className="flex flex-row gap-x-2 items-start w-full"
+                    className="flex flex-col gap-y-1 w-full"
                   >
-                    <input
-                      {...field}
-                      type="date"
-                      name="endDate"
-                      id="endDate"
-                      className="rounded-secondary h-8 w-full flex-1"
-                      onChange={(e) => field.onChange(e.target.value)}
-                      min={formatDate(tour?.duration?.startDate)}
-                      max={formatDate(tour?.duration?.endDate)}
-                    />
-                    <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
-                      <AiOutlineCalendar className="w-6 h-6" />
-                    </span>
+                    <span className="text-xs text-gray-600">Return Date</span>
+                    <div className="flex flex-row gap-x-2 items-start">
+                      <input
+                        {...field}
+                        type="date"
+                        name="endDate"
+                        id="endDate"
+                        className="rounded-secondary h-8 w-full flex-1"
+                        onChange={(e) => field.onChange(e.target.value)}
+                        min={formatDate(tour?.duration?.startDate)}
+                        max={formatDate(tour?.duration?.endDate)}
+                      />
+                      <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
+                        <AiOutlineCalendar className="w-6 h-6" />
+                      </span>
+                    </div>
                   </label>
                 )}
               />
@@ -236,23 +242,26 @@ const Left = () => {
                 render={({ field }) => (
                   <label
                     htmlFor="members"
-                    className="flex flex-row gap-x-2 items-center w-full"
+                    className="flex flex-col gap-y-1 w-full"
                   >
-                    <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
-                      <FiUsers className="w-6 h-6" />
-                    </span>
-                    <input
-                      {...field}
-                      type="number"
-                      name="members"
-                      id="members"
-                      className="rounded-secondary h-8 w-full flex-1"
-                      defaultValue={field.value || tour?.members}
-                      value={field.value}
-                      min="1"
-                      max={tour?.members}
-                      onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    />
+                    <span className="text-xs text-gray-600">Passengers</span>
+                    <div className="flex flex-row gap-x-2 items-center">
+                      <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
+                        <FiUsers className="w-6 h-6" />
+                      </span>
+                      <input
+                        {...field}
+                        type="number"
+                        name="members"
+                        id="members"
+                        className="rounded-secondary h-8 w-full flex-1"
+                        defaultValue={field.value || tour?.members}
+                        value={field.value}
+                        min="1"
+                        max={tour?.members}
+                        onChange={(e) => field.onChange(parseInt(e.target.value))}
+                      />
+                    </div>
                   </label>
                 )}
               />
@@ -264,20 +273,23 @@ const Left = () => {
                 render={({ field }) => (
                   <label
                     htmlFor="price"
-                    className="flex flex-row gap-x-2 items-center w-full"
+                    className="flex flex-col gap-y-1 w-full"
                   >
-                    <input
-                      {...field}
-                      type="number"
-                      name="price"
-                      id="price"
-                      className="rounded-secondary h-8 w-full flex-1"
-                      placeholder="Pricing Amount"
-                      value={tour?.price * members}
-                    />
-                    <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
-                      <MdAttachMoney className="w-6 h-6" />
-                    </span>
+                    <span className="text-xs text-gray-600">Price per Day ($)</span>
+                    <div className="flex flex-row gap-x-2 items-center">
+                      <input
+                        {...field}
+                        type="number"
+                        name="price"
+                        id="price"
+                        className="rounded-secondary h-8 w-full flex-1"
+                        placeholder="Pricing Amount"
+                        value={tour?.price * members}
+                      />
+                      <span className="h-8 w-8 rounded-secondary border border-black flex justify-center items-center p-1.5">
+                        <MdAttachMoney className="w-6 h-6" />
+                      </span>
+                    </div>
                   </label>
                 )}
               />
@@ -552,11 +564,11 @@ function Checkout({ rent, setIsOpen, members }) {
 
             <div className="text-sm flex flex-col gap-y-1">
               <p className="flex flex-row justify-between items-center">
-                <span className="">Cost Per Night ($)</span>
+                <span className="">Cost Per Day ($)</span>
                 <span className="">{rent?.price}</span>
               </p>
               <p className="flex flex-row justify-between items-center">
-                <span className="">Overall Members</span>
+                <span className="">Passengers</span>
                 <span className="">{members}</span>
               </p>
               <hr />

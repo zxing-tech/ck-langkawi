@@ -14,41 +14,37 @@
  */
 
 import hotelTypes from "@/data/hotelTypes";
-import useGetCountries from "@/hooks/useGetCountries";
 import React, { useState } from "react";
-// import { AiOutlineReload } from "react-icons/ai";
-// import { BiSolidStar } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import LoadImage from "../shared/image/LoadImage";
 import {
   setCategory,
   setCountries,
   setDateRange,
   setPriceRange,
-  // setRatings,
-  // resetFilter,
 } from "@/features/filter/filterSlice";
+
+const carTypes = hotelTypes;
 
 const FilterSidebar = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [priceRange, setPriceRangeLocal] = useState({ min: 5, max: 500 });
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [priceRange, setPriceRangeLocal] = useState({ min: 50, max: 200 });
   const [dateRange, setDateRangeLocal] = useState({
     startDate: null,
     endDate: null,
   });
-  // const [selectedRatings, setSelectedRatings] = useState([]);
 
-  const countries = useGetCountries();
+  // Locations in Langkawi
+  const locations = [
+    "Langkawi Airport",
+    "Downtown Langkawi",
+    "City Center",
+    "Beach Area",
+    "Premium Location",
+    "Airport Pickup",
+  ];
+
   const dispatch = useDispatch();
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
 
   // handle functions for updating local state and dispatching actions
   const handleCategoryChange = (selectedOptions) => {
@@ -56,9 +52,9 @@ const FilterSidebar = () => {
     dispatch(setCategory(selectedOptions));
   };
 
-  const handleCountriesChange = (selectedOptions) => {
-    setSelectedCountries(selectedOptions);
-    dispatch(setCountries(selectedOptions));
+  const handleLocationChange = (selectedOptions) => {
+    setSelectedLocation(selectedOptions);
+    dispatch(setCountries(selectedOptions)); // Using same redux action
   };
 
   const handlePriceRangeChange = (min, max) => {
@@ -87,22 +83,22 @@ const FilterSidebar = () => {
   return (
     <aside className="lg:col-span-3 md:col-span-4 col-span-12">
       <section className="flex flex-col gap-y-4 md:sticky md:top-4">
-        {/* Choose Category */}
+        {/* Choose Car Type */}
         <div className="flex flex-col gap-y-4 border py-2 px-4 rounded">
-          <h2 className="text-lg">Choose Category</h2>
-          <div className="flex flex-col gap-y-2.5 h-40 overflow-y-auto">
-            {hotelTypes?.length === 0 && <>Loading...</>}
-            {hotelTypes?.map(({ name, icon }, index) => (
+          <h2 className="text-lg font-semibold">Car Type</h2>
+          <div className="flex flex-col gap-y-2.5 h-40 overflow-y-auto scrollbar-hide">
+            {carTypes?.length === 0 && <>Loading...</>}
+            {carTypes?.map(({ name, icon }, index) => (
               <label
                 key={index}
                 htmlFor={name}
-                className="text-sm flex flex-row items-center gap-x-1.5"
+                className="text-sm flex flex-row items-center gap-x-2 hover:bg-gray-50 p-1 rounded cursor-pointer"
               >
                 <input
                   type="checkbox"
                   name={name}
                   id={name}
-                  className="!rounded-secondary checked:bg-primary checked:text-primary"
+                  className="!rounded checked:bg-primary focus:ring-primary"
                   onChange={(e) => {
                     const isChecked = e.target.checked;
                     const updatedCategory = isChecked
@@ -113,8 +109,8 @@ const FilterSidebar = () => {
                     handleCategoryChange(updatedCategory);
                   }}
                 />
-                <span className="flex flex-row gap-x-1 items-center whitespace-normal truncate">
-                  {icon}
+                <span className="flex flex-row gap-x-2 items-center whitespace-normal">
+                  <span className="text-primary">{icon}</span>
                   {name}
                 </span>
               </label>
@@ -122,38 +118,31 @@ const FilterSidebar = () => {
           </div>
         </div>
 
-        {/* Choose Country */}
+        {/* Choose Location */}
         <div className="flex flex-col gap-y-4 border py-2 px-4 rounded">
-          <h2 className="text-lg">Choose Country</h2>
-          <div className="flex flex-col gap-y-2.5 h-40 overflow-y-auto">
-            {countries?.length === 0 && <>Loading...</>}
-            {countries?.map((country, index) => (
+          <h2 className="text-lg font-semibold">Pickup Location</h2>
+          <div className="flex flex-col gap-y-2.5 max-h-48 overflow-y-auto scrollbar-hide">
+            {locations?.map((location, index) => (
               <label
                 key={index}
-                htmlFor={country.name}
-                className="text-sm flex flex-row items-center gap-x-1.5"
+                htmlFor={location}
+                className="text-sm flex flex-row items-center gap-x-2 hover:bg-gray-50 p-1 rounded cursor-pointer"
               >
                 <input
                   type="checkbox"
-                  name={country.name}
-                  id={country.name}
-                  className="!rounded-secondary checked:bg-primary checked:text-primary"
+                  name={location}
+                  id={location}
+                  className="!rounded checked:bg-primary focus:ring-primary"
                   onChange={(e) => {
                     const isChecked = e.target.checked;
-                    const updatedCountries = isChecked
-                      ? [...selectedCountries, country.name]
-                      : selectedCountries.filter((c) => c !== country.name);
-                    handleCountriesChange(updatedCountries);
+                    const updatedLocations = isChecked
+                      ? [...selectedLocation, location]
+                      : selectedLocation.filter((l) => l !== location);
+                    handleLocationChange(updatedLocations);
                   }}
                 />
-                <span className="flex flex-row gap-x-2 items-center whitespace-normal truncate">
-                  <LoadImage
-                    src={country.flag}
-                    alt={country.name}
-                    height={10}
-                    width={20}
-                  />
-                  {country.name}
+                <span className="whitespace-normal">
+                  {location}
                 </span>
               </label>
             ))}
@@ -162,54 +151,57 @@ const FilterSidebar = () => {
 
         {/* Price Range */}
         <div className="flex flex-col gap-y-4 border py-2 px-4 rounded">
-          <h2 className="text-lg">Price Range</h2>
-          <label htmlFor="price" className="flex flex-col gap-y-2">
+          <h2 className="text-lg font-semibold">Price Per Day</h2>
+          <label htmlFor="price" className="flex flex-col gap-y-3">
             <input
               type="range"
               name="price"
               id="price"
-              min={5}
-              max={500}
+              min={50}
+              max={200}
               value={priceRange.min}
               onChange={(e) =>
                 handlePriceRangeChange(Number(e.target.value), priceRange.max)
               }
-              className="flex-1 bg-secondary appearance-none h-0 rounded"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
             />
-            <p className="text-xs flex flex-row items-center justify-between">
-              ${priceRange.min.toFixed(2)}
-              <span className="text-xs"> ${priceRange.max.toFixed(2)}</span>
-            </p>
+            <div className="flex flex-row items-center justify-between">
+              <span className="text-sm font-medium text-primary">${priceRange.min}</span>
+              <span className="text-xs text-gray-500">to</span>
+              <span className="text-sm font-medium text-primary">${priceRange.max}</span>
+            </div>
           </label>
         </div>
 
         {/* Date Range */}
         <div className="flex flex-col gap-y-4 border py-2 px-4 rounded">
-          <h2 className="text-lg">Date Range</h2>
-          <label
-            htmlFor="startDate"
-            className="flex flex-row gap-x-2 items-center"
-          >
-            <input
-              type="date"
-              id="startDate"
-              value={dateRange.startDate}
-              onChange={(e) =>
-                handleDateRangeChange(e.target.value, dateRange.endDate)
-              }
-              className="flex-1 !text-sm !p-0 !border-0"
-            />
-            <div className="h-4 border" />
-            <input
-              type="date"
-              id="endDate"
-              value={dateRange.endDate}
-              onChange={(e) =>
-                handleDateRangeChange(dateRange.startDate, e.target.value)
-              }
-              className="flex-1 !text-sm !p-0 !border-0"
-            />
-          </label>
+          <h2 className="text-lg font-semibold">Rental Period</h2>
+          <div className="flex flex-col gap-y-3">
+            <label htmlFor="startDate" className="flex flex-col gap-y-1">
+              <span className="text-xs text-gray-600">Pickup Date</span>
+              <input
+                type="date"
+                id="startDate"
+                value={dateRange.startDate || ""}
+                onChange={(e) =>
+                  handleDateRangeChange(e.target.value, dateRange.endDate)
+                }
+                className="text-sm p-2 border rounded focus:ring-2 focus:ring-primary focus:border-primary"
+              />
+            </label>
+            <label htmlFor="endDate" className="flex flex-col gap-y-1">
+              <span className="text-xs text-gray-600">Return Date</span>
+              <input
+                type="date"
+                id="endDate"
+                value={dateRange.endDate || ""}
+                onChange={(e) =>
+                  handleDateRangeChange(dateRange.startDate, e.target.value)
+                }
+                className="text-sm p-2 border rounded focus:ring-2 focus:ring-primary focus:border-primary"
+              />
+            </label>
+          </div>
         </div>
 
         {/* Choose Ratings */}
